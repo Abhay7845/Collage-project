@@ -1,0 +1,27 @@
+@media screen and (max-width: 800px) {
+  .RegisterLeftStyle {
+    display: none;
+  }
+}
+
+.RegisterLeftStyle {
+  background-image: url("../../../public//avatar/RegisterImage.webp");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-color: #e4fdfd;
+  height: 100vh;
+  z-index: -1;
+}
+
+.RegisterLeftRight {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100vw;
+}
+
+@media screen and (min-width: 799.5px) {
+  .footerStyle {
+    display: none;
+  }
+}

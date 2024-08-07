@@ -1,0 +1,157 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.GInput {
+  width: 100%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c1c4c5;
+}
+
+.GInput:hover {
+  border-bottom: 1px solid #1899e4;
+}
+
+.GSelect {
+  width: 100%;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  outline: none;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #c1c4c5;
+  cursor: pointer;
+}
+
+.GSelect:hover {
+  border-bottom: 1px solid #1899e4;
+}
+
+.GTextArea {
+  width: 100%;
+  outline: none;
+  padding: 5px;
+  border: 1px solid #c1c4c5;
+}
+
+.GTextArea:hover {
+  border: 1px solid #1899e4;
+}
+
+.CButton {
+  padding: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: large;
+  border: none;
+  background-color: #1899e4;
+  color: #ffff;
+  border-radius: 2px;
+}
+
+.CButton:hover {
+  background-color: #53b8f2;
+}
+
+
+.VButton {
+  padding: 2px;
+  padding-left: 8px;
+  padding-right: 8px;
+  font-size: large;
+  border: none;
+  background-color: #1899e4;
+  color: #ffff;
+  border-radius: 1.5px;
+}
+
+.VButton:hover {
+  background-color: #53b8f2;
+}
+
+/* AlertStyle CSS */
+.alertStyle {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
+.userId {
+  opacity: 0.3;
+  font-weight: bold;
+  text-align: center;
+}
+
+@media screen and (max-width: 820px) {
+  .userId {
+    opacity: 1;
+  }
+}
+
+tr:hover .userId {
+  opacity: 1;
+}
+
+/* Register and Login Button Style */
+
+.registerLoginButton {
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border: none;
+  background: transparent;
+  color: #ffff;
+  border: 1px solid #ffff;
+  border-radius: 2px;
+}
+
+.registerLoginButton:hover {
+  background-color: #edf7fa;
+  color: black;
+}
+
+.downloadexcel {
+  border: none;
+  padding: 2px;
+  padding-left: 10px;
+  padding-right: 10px;
+  border-radius: 2px;
+  background-color: #058a05;
+  color: #ffff;
+}
+
+.downloadexcel:hover {
+  background-color: #03bc03;
+}
+
+/* NavbarShowStyle */
+@media screen and (max-width:992px) {
+  .NavbarShowStyle {
+    display: none;
+  }
+}
+
+
+@media screen and (min-width:993px) {
+  .SideNavbarSwoStyle {
+    display: none;
+  }
+}
+
+.loaderStyle {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}

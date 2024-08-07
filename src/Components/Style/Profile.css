@@ -1,0 +1,30 @@
+.userInfo {
+  display: flex;
+  justify-content: center;
+  height: 77vh;
+}
+.dataInfo {
+  width: 50%;
+}
+@media screen and (max-width: 700px) {
+  .dataInfo {
+    width: 100%;
+  }
+}
+
+.AboutFooter {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.profileUser {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+}
+.forgotPassStyle {
+  text-decoration: none;
+}
+.forgotPassStyle:hover {
+  text-decoration: underline;
+}

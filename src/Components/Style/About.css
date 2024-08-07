@@ -1,0 +1,91 @@
+.about-section {
+  background-color: #cde5f5;
+  padding-top: 6%;
+  padding-bottom: 4%;
+  padding-left: 2%;
+  padding-right: 2%;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  flex-direction: column;
+  font-weight: bold;
+  margin-top: -10px;
+}
+
+@media screen and (max-width: 760px) {
+  .about-image-row {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.about-image-col {
+  display: flex;
+  justify-content: center;
+}
+
+.about-image {
+  height: 250px;
+}
+
+@media screen and (max-width: 333px) {
+  .about-image {
+    margin-top: 5%;
+    height: 180px;
+    width: 200px;
+  }
+}
+
+.about-contact {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.subscribe-button {
+  padding: 8px;
+  padding-left: 15px;
+  padding-right: 15px;
+  font-size: large;
+  border: none;
+  background-color: #7fe40d;
+  color: #fff;
+  border-radius:2px;
+}
+
+.subscribe-button:hover {
+  background-color: #ddbc26;
+}
+
+@media screen and (max-width: 540px) {
+  .subscribe-button {
+    width: 100%;
+  }
+}
+
+
+/* USERS COMMENT STYLE  */
+.commentStyle {
+  margin-left: 28px;
+}
+
+.commentsStyle {
+  display: flex;
+  justify-content: space-between;
+}
+
+@media screen and (max-width:762px) {
+  .commentsStyle {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+@media screen and (max-width:762px) {
+  .commentDate {
+    display: flex;
+    justify-content: flex-end;
+    font-size: 13px;
+    margin-top: 10px;
+  }
+}
