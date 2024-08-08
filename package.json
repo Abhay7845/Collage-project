@@ -1,5 +1,6 @@
 {
   "name": "client",
+  "homepage": "https://Abhay7845.github.io/home",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -20,6 +21,7 @@
     "country-state-city": "^3.0.1",
     "formik": "^2.2.9",
     "geolocation": "^0.2.0",
+    "gh-pages": "^6.1.1",
     "google-maps": "^4.3.3",
     "js-cookie": "^3.0.5",
     "leaflet": "^1.9.4",
@@ -46,6 +48,8 @@
     "yup": "^0.32.11"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
