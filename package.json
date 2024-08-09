@@ -17,6 +17,7 @@
     "antd": "^4.22.4",
     "axios": "^0.27.2",
     "bootstrap-icons": "^1.9.1",
+    "caniuse-lite": "^1.0.30001651",
     "country-state-city": "^3.0.1",
     "formik": "^2.2.9",
     "geolocation": "^0.2.0",
