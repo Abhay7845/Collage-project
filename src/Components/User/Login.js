@@ -6,12 +6,15 @@ import { Link, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import Footer from "../HomePage/Footer";
 import { Form, Formik, Field } from "formik";
-import { GoogleLogin } from '@react-oauth/google';
-import { LoginInitialValue, LoginSchema } from "../ValidationSchema/LoginSchema";
+import { GoogleLogin } from "@react-oauth/google";
+import {
+  LoginInitialValue,
+  LoginSchema,
+} from "../ValidationSchema/LoginSchema";
 import ShowError from "../Common/ShowError";
 import { HOST_URL } from "../../API/Host";
 import axios from "axios";
-import Cookies from 'js-cookie';
+import Cookies from "js-cookie";
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -20,43 +23,75 @@ const Login = () => {
 
   const onLogin = (payload) => {
     setLoading(true);
-    axios.post(`${HOST_URL}/login`, payload)
+    axios
+      .post(`${HOST_URL}/login`, payload)
       .then((res) => res)
       .then((response) => {
         if (response.data.code === 1000) {
-          Cookies.set('token', response.data.token, { expires: 7, path: '/', secure: true, sameSite: 'Strict' });
+          Cookies.set("token", response.data.token, {
+            expires: 7,
+            path: "/",
+            secure: true,
+            sameSite: "Strict",
+          });
           navigate("/home");
         } else if (response.data.code === 1001) {
-          toast.error("Sorry! Please Registred With Us", { theme: "colored", autoClose: 1000 });
+          toast.error("Sorry! Please Registred With Us", {
+            theme: "colored",
+            autoClose: 1000,
+          });
         } else if (response.data.code === 1002) {
-          toast.error("Sorry! Password Dose Not Matched", { theme: "colored", autoClose: 1000 });
+          toast.error("Sorry! Password Dose Not Matched", {
+            theme: "colored",
+            autoClose: 1000,
+          });
         }
         setLoading(false);
-      }).catch((error) => {
-        toast.warn("Server is not running", { theme: "colored", autoClose: 2000 });
+      })
+      .catch((error) => {
+        toast.warn("Server is not running", {
+          theme: "colored",
+          autoClose: 2000,
+        });
         setLoading(false);
       });
   };
   // LOGIN WITH GOOGLE
   const LoginByEmail = (email) => {
     setLoading(true);
-    axios.get(`${HOST_URL}/login/by/${email}`)
+    axios
+      .get(`${HOST_URL}/login/by/${email}`)
       .then((res) => res)
       .then((response) => {
         if (response.data.code === 1000) {
-          Cookies.set('token', response.data.token, { expires: 7, path: '/', secure: true, sameSite: 'Strict' });
+          Cookies.set("token", response.data.token, {
+            expires: 7,
+            path: "/",
+            secure: true,
+            sameSite: "Strict",
+          });
           navigate("/home");
         } else if (response.data.code === 1001) {
-          toast.error("Sorry! Please Registred With Us", { theme: "colored", autoClose: 1000 });
+          toast.error("Sorry! Please Registred With Us", {
+            theme: "colored",
+            autoClose: 1000,
+          });
         } else if (response.data.code === 1002) {
-          toast.error("Sorry! Password Dose Not Matched", { theme: "colored", autoClose: 1000 });
+          toast.error("Sorry! Password Dose Not Matched", {
+            theme: "colored",
+            autoClose: 1000,
+          });
         }
         setLoading(false);
-      }).catch((error) => {
-        toast.warn("Server is not running", { theme: "colored", autoClose: 2000 });
+      })
+      .catch((error) => {
+        toast.warn("Server is not running", {
+          theme: "colored",
+          autoClose: 2000,
+        });
         setLoading(false);
       });
-  }
+  };
   const onSuccess = (response) => {
     console.log("response==>", response);
     if (response.email) {
@@ -64,7 +99,9 @@ const Login = () => {
     }
   };
 
-  const onError = (error) => { console.log("error==>", error) };
+  const onError = (error) => {
+    console.log("error==>", error);
+  };
 
   return (
     <div>
@@ -147,10 +184,7 @@ const Login = () => {
             </Link>
           </div>
           <div className="d-flex justify-content-center mt-4">
-            <GoogleLogin
-              onSuccess={onSuccess}
-              onError={onError}
-            />
+            <GoogleLogin onSuccess={onSuccess} onError={onError} />
           </div>
         </div>
       </div>
