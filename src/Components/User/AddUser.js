@@ -4,11 +4,14 @@ import { occupationData } from "./UserListData";
 import { Link, useNavigate } from "react-router-dom";
 import { Field, Form, Formik } from "formik";
 import { toast } from "react-toastify";
-import { addUserInitialValue, addUserSchema } from "../ValidationSchema/AddUserSchema";
+import {
+  addUserInitialValue,
+  addUserSchema,
+} from "../ValidationSchema/AddUserSchema";
 import ShowError from "../Common/ShowError";
-import { HOST_URL } from "../../API/Host";
 import Footer from "../HomePage/Footer";
-import Cookies from "js-cookie"
+import { APIAddUserInfo } from "../../API/CommonApiCall";
+import { APIUrl } from "../../API/EndPoint";
 
 const AddUser = () => {
   const [country, setCountry] = useState("");
@@ -28,7 +31,6 @@ const AddUser = () => {
     );
     setSelectedState(getState);
   };
-  const userAccessToken = Cookies.get("token");
   const handleStateCode = (e) => {
     const stateCode = e.target.value;
     setState(stateCode);
@@ -39,29 +41,50 @@ const AddUser = () => {
   };
   const addUserInfo = async (payload) => {
     setLoading(true);
-    const { name, occupation, email, phone, postalCode, address } = payload;
-    const response = await fetch(`${HOST_URL}/addUser`, {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userAccessToken,
-      },
-      body: JSON.stringify({ name, occupation, email, phone, country, state, city, postalCode, address }),
-    }).catch(error => {
-      toast.error("Internal Server Error", { theme: "colored", autoClose: 3000 });
-      setLoading(false);
-    });
-    const data = await response.json();
-    if (data.success === false) {
-      toast.error("Select Country, State, District", { theme: "colored", autoClose: 3000 });
-    }
-    if (data.code === 1000) {
-      toast.success("User Details Inserted Successfully", { theme: "colored", autoClose: 1000, });
-      navigate("/user");
-    } else if (data.code === 1001) {
-      toast.error("User Details Not Inserted", { theme: "colored", autoClose: 1000, });
-    }
-    setLoading(false);
+    const AddUserNinfo = {
+      name: payload.name,
+      occupation: payload.occupation,
+      email: payload.email,
+      phone: payload.phone,
+      country: country,
+      state: state,
+      city: city,
+      postalCode: payload.postalCode,
+      address: payload.address,
+    };
+    APIAddUserInfo(APIUrl.ADD_USER, AddUserNinfo)
+      .then((res) => res)
+      .then((response) => {
+        if (response.data.code === 1002) {
+          response.data.errors.forEach((err) => {
+            if (!err.value) {
+              toast.error(err.msg, {
+                theme: "colored",
+                autoClose: 3000,
+              });
+            }
+          });
+        } else if (response.data.code === 1000) {
+          toast.success("User Details Inserted Successfully", {
+            theme: "colored",
+            autoClose: 1000,
+          });
+          navigate("/user");
+        } else if (response.data.code === 1001) {
+          toast.error("User Details Not Inserted", {
+            theme: "colored",
+            autoClose: 1000,
+          });
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        toast.error("Internal Server Error", {
+          theme: "colored",
+          autoClose: 3000,
+        });
+        setLoading(false);
+      });
   };
 
   return (

@@ -5,11 +5,12 @@ import moment from "moment";
 import Footer from "../HomePage/Footer";
 import "../../Components/Style/Profile.css";
 import { ProfileAPI } from "../../Redux/APICall/ProfileAPI";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 const Profile = () => {
   const [userInfo, setUserinfo] = useState([]);
   const userAccessToken = Cookies.get("token");
+
   useEffect(() => {
     if (userAccessToken) {
       ProfileAPI().then((res) => setUserinfo(res.data.data));

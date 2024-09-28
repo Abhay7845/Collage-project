@@ -5,7 +5,7 @@ import * as Icon from "react-bootstrap-icons";
 import image from "../../Asset/img/a_logo.png";
 import "../Style/HomePage.css";
 import Tippy from "@tippyjs/react";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 const Navbar = () => {
   const [theme, setTheme] = useState("light-theme");
@@ -15,7 +15,7 @@ const Navbar = () => {
     navigate("/login");
   };
   let location = useLocation();
-  useEffect(() => { }, [location]);
+  useEffect(() => {}, [location]);
 
   const ChangeTheme = () => {
     if (theme === "dark-theme") {
@@ -38,38 +38,50 @@ const Navbar = () => {
 
   return (
     <div>
-      <nav className={`navbar navbar-expand-lg ${theme === "light-theme" ? "bg-info" : "bg-primary"}`}>
+      <nav
+        className={`navbar navbar-expand-lg ${
+          theme === "light-theme" ? "bg-info" : "bg-primary"
+        }`}
+      >
         <div className="container-fluid">
           <div className="collapse navbar-collapse" id="navbarSupportedContent">
             <ul className="navbar-nav me-auto mb-lg-0">
               {!Cookies.get("token") ? (
                 <li className="nav-item">
-                  <Link className="navbar-brand" to="/home">
+                  <Link className="navbar-brand" to="/">
                     <img src={image} alt="aryan" width={36} />
                   </Link>
                 </li>
               ) : (
                 <div className="d-flex">
                   <Link
-                    className={`nav-link NavbarList ${location.pathname === "/home" ? "active" : ""}`}
-                    to="/home"
+                    className={`nav-link NavbarList ${
+                      location.pathname === "/" ? "active" : ""
+                    }`}
+                    to="/"
                   >
                     <img src={image} alt="aryan" width={36} />
                   </Link>
                   <Link
-                    className={`nav-link NavbarList ${location.pathname === "/user" ? "active" : ""}`}
+                    className={`nav-link NavbarList ${
+                      location.pathname === "/user" ? "active" : ""
+                    }`}
                     to="/user"
                   >
                     USER
                   </Link>
                   <Link
-                    className={`nav-link NavbarList ${location.pathname === "/product" ? "active" : ""}`}
+                    className={`nav-link NavbarList ${
+                      location.pathname === "/product" ? "active" : ""
+                    }`}
                     to="/product"
                   >
                     PRODUCTS
                   </Link>
                   <Link
-                    className={`nav-link NavbarList ${location.pathname === "/about" ? "active" : ""}`}
+                    className={`nav-link NavbarList ${
+                      location.pathname === "/about" ? "active" : ""
+                    }`}
                     to="/about"
                   >
                     ABOUT
@@ -78,16 +90,6 @@ const Navbar = () => {
               )}
             </ul>
             <form className="d-flex">
-              <Link
-                className={`nav-link NavbarList ${location.pathname === "/translator" ? "active" : ""}`}
-                to="/translator"
-              >
-                <Icon.Translate
-                  className="my-1 mx-2"
-                  size={22}
-                  cursor="pointer"
-                />
-              </Link>
               <Icon.SunFill
                 className="my-1 lightDark mx-2"
                 size={22}
@@ -112,7 +114,11 @@ const Navbar = () => {
                     >
                       <Icon.PersonCircle
                         size={20}
-                        className={`${location.pathname === "/profile" ? "text-dark" : "text-light"}`}
+                        className={`${
+                          location.pathname === "/profile"
+                            ? "text-dark"
+                            : "text-light"
+                        }`}
                         style={{ outline: "none" }}
                       />
                     </Tippy>

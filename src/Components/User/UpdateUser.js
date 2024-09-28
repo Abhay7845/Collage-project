@@ -4,14 +4,12 @@ import { Country, State, City } from "country-state-city";
 import { occupationData } from "./UserListData";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
-import axios from "axios";
-import { HOST_URL } from "../../API/Host";
 import AppLoader from "../Common/AppLoader";
 import Footer from "../HomePage/Footer";
-import Cookies from "js-cookie"
+import { APIGetAddedUser, APIUpdateserInfo } from "../../API/CommonApiCall";
+import { APIUrl } from "../../API/EndPoint";
 
 const UpdateUser = () => {
-  const userAccessToken = Cookies.get("token");
   const { id } = useParams();
   const [name, setName] = useState("");
   const [occupation, setOccupation] = useState("");
@@ -32,7 +30,9 @@ const UpdateUser = () => {
   const handleCountryCode = (e) => {
     const countryCode = !e ? addedUser.country : e.target.value;
     setCountry(countryCode);
-    const getState = State.getAllStates().filter((state) => state.countryCode === countryCode);
+    const getState = State.getAllStates().filter(
+      (state) => state.countryCode === countryCode
+    );
     setSelectedState(getState);
   };
 
@@ -43,7 +43,9 @@ const UpdateUser = () => {
   const handleStateCode = (e) => {
     const stateCode = !e ? addedUser.state : e.target.value;
     setState(stateCode);
-    const getCity = City.getAllCities().filter((city) => city.stateCode === stateCode);
+    const getCity = City.getAllCities().filter(
+      (city) => city.stateCode === stateCode
+    );
     setSelectedCity(getCity);
   };
 
@@ -54,48 +56,52 @@ const UpdateUser = () => {
   const UpdateUserDetails = () => {
     setLoading(true);
     const updateinput = {
-      name: !name ? addedUser.name : name,
-      occupation: !occupation ? addedUser.occupation : occupation,
-      email: !email ? addedUser.email : email,
-      phone: !phone ? addedUser.phone : phone,
-      country: !country ? addedUser.country : country,
-      state: !state ? addedUser.state : state,
-      city: !city ? addedUser.city : city,
-      postalCode: !postalCode ? addedUser.postalCode : postalCode,
-      address: !address ? addedUser.address : address,
+      name: name ? name : addedUser.name,
+      occupation: occupation ? occupation : addedUser.occupation,
+      email: email ? email : addedUser.email,
+      phone: phone ? phone : addedUser.phone,
+      country: country ? country : addedUser.country,
+      state: state ? state : addedUser.state,
+      city: city ? city : addedUser.city,
+      postalCode: postalCode ? postalCode : addedUser.postalCode,
+      address: address ? address : addedUser.address,
     };
-    axios.put(`${HOST_URL}/update/user/${id}`, updateinput, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userAccessToken,
-      },
-    }).then((res) => res)
+    console.log("updateinput==>", updateinput);
+    APIUpdateserInfo(`${APIUrl.UPDATE_USER_ID}/${id}`, updateinput)
+      .then((res) => res)
       .then((response) => {
         if (response.data.code === 1000) {
-          toast.success("Data has been Updated successfully", { theme: "colored", autoClose: 2000 });
+          toast.success("Data has been Updated successfully", {
+            theme: "colored",
+            autoClose: 2000,
+          });
           navigate("/user");
-        } else if (response.data.success === false) {
-          toast.error("Select Country, State, District", { theme: "colored", autoClose: 3000 });
+        } else if (response.data.code === 1002) {
+          response.data.errors.forEach((err) => {
+            if (!err.value) {
+              toast.error(err.msg, {
+                theme: "colored",
+                autoClose: 3000,
+              });
+            }
+          });
         }
         setLoading(false);
-      }).catch((error) => setLoading(false));
+      })
+      .catch((error) => setLoading(false));
   };
 
   useEffect(() => {
     setLoading(true);
-    axios.get(`${HOST_URL}/fetch/AddUser/${id}`, {
-      headers: {
-        "Content-Type": "application/json",
-      },
-    }).then((res) => res)
+    APIGetAddedUser(`${APIUrl.GER_USER_ID}/${id}`)
+      .then((res) => res)
       .then((result) => {
         if (result.data.code === 1000) {
           setAddedUser(result.data.AddedUser);
-        } else if (result.data.code === 1001) {
-          setAddedUser({});
         }
         setLoading(false);
-      }).catch((error) => setLoading(false));
+      })
+      .catch((error) => setLoading(false));
   }, [id]);
 
   return (

@@ -12,9 +12,9 @@ import {
   LoginSchema,
 } from "../ValidationSchema/LoginSchema";
 import ShowError from "../Common/ShowError";
-import { HOST_URL } from "../../API/Host";
-import axios from "axios";
 import Cookies from "js-cookie";
+import { APIEmailLogin, APILogin } from "../../API/CommonApiCall";
+import { APIUrl } from "../../API/EndPoint";
 
 const Login = () => {
   const [passwordShown, setPasswordShown] = useState(false);
@@ -23,8 +23,7 @@ const Login = () => {
 
   const onLogin = (payload) => {
     setLoading(true);
-    axios
-      .post(`${HOST_URL}/login`, payload)
+    APILogin(APIUrl.LOGIN, payload)
       .then((res) => res)
       .then((response) => {
         if (response.data.code === 1000) {
@@ -34,7 +33,7 @@ const Login = () => {
             secure: true,
             sameSite: "Strict",
           });
-          navigate("/home");
+          navigate("/");
         } else if (response.data.code === 1001) {
           toast.error("Sorry! Please Registred With Us", {
             theme: "colored",
@@ -59,8 +58,7 @@ const Login = () => {
   // LOGIN WITH GOOGLE
   const LoginByEmail = (email) => {
     setLoading(true);
-    axios
-      .get(`${HOST_URL}/login/by/${email}`)
+    APIEmailLogin(`${APIUrl.LOGIN_EMAIL}${email}`)
       .then((res) => res)
       .then((response) => {
         if (response.data.code === 1000) {
@@ -70,7 +68,7 @@ const Login = () => {
             secure: true,
             sameSite: "Strict",
           });
-          navigate("/home");
+          navigate("/");
         } else if (response.data.code === 1001) {
           toast.error("Sorry! Please Registred With Us", {
             theme: "colored",

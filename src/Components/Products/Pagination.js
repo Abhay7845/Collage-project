@@ -17,13 +17,17 @@ const Pagination = ({ showPerPage, onPagination }) => {
   return (
     <div className="d-flex justify-content-between mt-4">
       <button
-        className={`btn btn-info text-white btn-sm ${previousMute === 0 ? "disabled" : ""}`}
+        className={`btn btn-info text-white btn-sm ${
+          previousMute === 0 ? "disabled" : ""
+        }`}
         onClick={() => setCounter(counter - 1)}
       >
         {previousMute === 0 ? "Disabled" : "Previous"}
       </button>
       <button
-        className={`btn btn-info btn-sm text-white ${nextMute > 11 ? "disabled" : ""}`}
+        className={`btn btn-info btn-sm text-white ${
+          nextMute > 11 ? "disabled" : ""
+        }`}
         onClick={() => setCounter(counter + 1)}
       >
         {nextMute > 11 ? "Disabled" : "Next"}

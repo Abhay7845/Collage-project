@@ -3,7 +3,7 @@ import * as Icon from "react-bootstrap-icons";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { FaUser } from "react-icons/fa";
 import image from "../../Asset/img/a_logo.png";
-import Cookies from "js-cookie"
+import Cookies from "js-cookie";
 
 import "../Style/SideBar.css";
 import { ProfileAPI } from "../../Redux/APICall/ProfileAPI";
@@ -21,7 +21,7 @@ const SideNavbar = () => {
     navigate("/login");
   };
   let location = useLocation();
-  useEffect(() => { }, [location]);
+  useEffect(() => {}, [location]);
 
   const ChangeTheme = () => {
     if (theme === "dark-theme") {
@@ -43,7 +43,11 @@ const SideNavbar = () => {
   }, [userAccessToken]);
   return (
     <div>
-      <nav className={`navbar navbar-expand-lg ${theme === "light-theme" ? "bg-info" : "bg-primary"}`}>
+      <nav
+        className={`navbar navbar-expand-lg ${
+          theme === "light-theme" ? "bg-info" : "bg-primary"
+        }`}
+      >
         <div className="p-1 w-100" style={{ marginTop: "-8px" }}>
           <div className="d-flex justify-content-between">
             <Icon.TextLeft
@@ -52,13 +56,17 @@ const SideNavbar = () => {
               className="text-light mt-1 mx-2"
               cursor="pointer"
             />
-            <Link className="navbar-brand" to="/home">
+            <Link className="navbar-brand" to="/">
               <img src={image} alt="aryan" width={33} />
             </Link>
           </div>
         </div>
       </nav>
-      <div className={`sidebar ${theme === "light-theme" ? "bg-info" : "bg-primary"} ${isOpen === true ? "active" : ""}`}>
+      <div
+        className={`sidebar ${
+          theme === "light-theme" ? "bg-info" : "bg-primary"
+        } ${isOpen === true ? "active" : ""}`}
+      >
         <div className="sd-header">
           {!userAccessToken ? (
             <img src={image} alt="img" className="mx-5" width={33} />
@@ -106,7 +114,9 @@ const SideNavbar = () => {
                 </li>
                 <li>
                   <Link
-                    className={`nav-link  ${location.pathname === "/profile" ? "active" : ""}`}
+                    className={`nav-link  ${
+                      location.pathname === "/profile" ? "active" : ""
+                    }`}
                     to="/profile"
                     onClick={ToggleSidebar}
                   >
@@ -116,7 +126,9 @@ const SideNavbar = () => {
                 </li>
                 <li>
                   <Link
-                    className={`nav-link text-light ${location.pathname === "/translator" ? "active" : ""}`}
+                    className={`nav-link text-light ${
+                      location.pathname === "/translator" ? "active" : ""
+                    }`}
                     to="/translator"
                     onClick={ToggleSidebar}
                   >
@@ -163,7 +175,9 @@ const SideNavbar = () => {
             </li>
             <li>
               <Link
-                className={`nav-link NavbarList ${location.pathname === "/translator" ? "active" : ""}`}
+                className={`nav-link NavbarList ${
+                  location.pathname === "/translator" ? "active" : ""
+                }`}
                 to="/translator"
                 onClick={ToggleSidebar}
               >
@@ -181,7 +195,7 @@ const SideNavbar = () => {
         className={`sidebar-overlay ${isOpen === true ? "active" : ""}`}
         onClick={ToggleSidebar}
       />
-    </div >
+    </div>
   );
 };
 

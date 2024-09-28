@@ -4,15 +4,18 @@ import { FaUserAlt } from "react-icons/fa";
 import "../Style/RegisterLogin.css";
 import "../../App.css";
 import { FaRegEyeSlash, FaRegEye } from "react-icons/fa";
-import { GoogleLogin } from '@react-oauth/google';
+import { GoogleLogin } from "@react-oauth/google";
 import { toast } from "react-toastify";
 import Footer from "../HomePage/Footer";
 import { Field, Form, Formik } from "formik";
 import ShowError from "../Common/ShowError";
-import { RegisterInitialValue, RegisterSchema } from "../ValidationSchema/RegisterSchema";
-import { HOST_URL } from "../../API/Host";
-import axios from "axios";
-import Cookies from "js-cookie"
+import {
+  RegisterInitialValue,
+  RegisterSchema,
+} from "../ValidationSchema/RegisterSchema";
+import Cookies from "js-cookie";
+import { APIUrl } from "../../API/EndPoint";
+import { APIEmailRegister, APIRegister } from "../../API/CommonApiCall";
 
 const Register = () => {
   const [loading, setLoading] = useState(false);
@@ -21,19 +24,34 @@ const Register = () => {
 
   const onSubmit = (payload) => {
     setLoading(true);
-    axios.post(`${HOST_URL}/register`, payload)
+    APIRegister(APIUrl.REGISTER, payload)
       .then((res) => res)
       .then((response) => {
         if (response.data.code === 1000) {
-          Cookies.set('token', response.data.token, { expires: 7, path: '/', secure: true, sameSite: 'Strict' });
-          toast.success("Your Account created Successfully", { theme: "colored", autoClose: 2000 });
-          navigate("/home");
+          Cookies.set("token", response.data.token, {
+            expires: 7,
+            path: "/",
+            secure: true,
+            sameSite: "Strict",
+          });
+          toast.success("Your Account created Successfully", {
+            theme: "colored",
+            autoClose: 2000,
+          });
+          navigate("/");
         } else if (response.data.code === 1001) {
-          toast.warn("Email is Already Registered", { theme: "colored", autoClose: 3000 });
+          toast.warn("Email is Already Registered", {
+            theme: "colored",
+            autoClose: 3000,
+          });
         }
         setLoading(false);
-      }).catch((error) => {
-        toast.warn("Server is not running", { theme: "colored", autoClose: 2000 });
+      })
+      .catch((error) => {
+        toast.warn("Server is not running", {
+          theme: "colored",
+          autoClose: 2000,
+        });
         setLoading(false);
       });
   };
@@ -42,21 +60,37 @@ const Register = () => {
 
   const RegisterByEmail = (email) => {
     setLoading(true);
-    axios.get(`${HOST_URL}/register/by/${email}`)
-      .then((res) => res).then((response) => {
+    APIEmailRegister(`${APIUrl.REGISTER_EMAIL}/${email}`)
+      .then((res) => res)
+      .then((response) => {
         if (response.data.code === 1000) {
-          Cookies.set('token', response.data.token, { expires: 7, path: '/', secure: true, sameSite: 'Strict' });
-          toast.success("Your Account created Successfully", { theme: "colored", autoClose: 2000 });
-          navigate("/home");
+          Cookies.set("token", response.data.token, {
+            expires: 7,
+            path: "/",
+            secure: true,
+            sameSite: "Strict",
+          });
+          toast.success("Your Account created Successfully", {
+            theme: "colored",
+            autoClose: 2000,
+          });
+          navigate("/");
         } else if (response.data.code === 1001) {
-          toast.warn("Email is Already Registered", { theme: "colored", autoClose: 3000 });
+          toast.warn("Email is Already Registered", {
+            theme: "colored",
+            autoClose: 3000,
+          });
         }
         setLoading(false);
-      }).catch((error) => {
-        toast.warn("Server is not running", { theme: "colored", autoClose: 2000 });
+      })
+      .catch((error) => {
+        toast.warn("Server is not running", {
+          theme: "colored",
+          autoClose: 2000,
+        });
         setLoading(false);
       });
-  }
+  };
 
   const onSuccess = (response) => {
     console.log("response==>", response);
@@ -64,7 +98,9 @@ const Register = () => {
       RegisterByEmail(response.email);
     }
   };
-  const onError = (error) => { console.log("error==>", error) };
+  const onError = (error) => {
+    console.log("error==>", error);
+  };
   return (
     <div>
       <div className="row mx-0">
@@ -156,10 +192,7 @@ const Register = () => {
             </Form>
           </Formik>
           <div className="d-flex justify-content-center">
-            <GoogleLogin
-              onSuccess={onSuccess}
-              onError={onError}
-            />
+            <GoogleLogin onSuccess={onSuccess} onError={onError} />
           </div>
         </div>
       </div>

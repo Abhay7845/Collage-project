@@ -18,11 +18,14 @@ const Products = () => {
   };
   console.log("videosList==>", videosList);
   const GetVideosList = () => {
-    axios.get("https://ai-server-c9ws.onrender.com/api/user/get/uploded/public/video")
+    axios
+      .get(
+        "https://ai-server-c9ws.onrender.com/api/user/get/uploded/public/video"
+      )
       .then((res) => res)
       .then((response) => setVideosList(response.data.data))
-      .catch((error) => { });
-  }
+      .catch((error) => {});
+  };
   useEffect(() => {
     GetVideosList();
   }, [setShowPerPage]);
@@ -41,26 +44,33 @@ const Products = () => {
           </div>
           <div>
             <div className="row row-cols-1 row-cols-sm-2 row-cols-md-4 g-3">
-              {videosList.slice(pagination.start, pagination.end).map((item, i) => {
-                const { description, videoUrl, id } = item;
-                return (
-                  <div key={i}>
-                    <h6 className="card-title my-2">
-                      {id}. {description.charAt(0).toUpperCase() + description.slice(1)}
-                    </h6>
-                    <div style={{ position: 'relative' }}>
-                      {loading === true && <VideoLoader />}
-                      <video className="w-100" controls autoPlay="off"
-                        onWaiting={() => setLoading(true)}
-                        onCanPlay={() => setLoading(false)}
-                        onPlaying={() => setLoading(false)}
-                      >
-                        <source src={videoUrl} type="video/mp4" />
-                      </video>
+              {videosList
+                .slice(pagination.start, pagination.end)
+                .map((item, i) => {
+                  const { description, videoUrl, id } = item;
+                  return (
+                    <div key={i}>
+                      <h6 className="card-title my-2">
+                        {id}.{" "}
+                        {description.charAt(0).toUpperCase() +
+                          description.slice(1)}
+                      </h6>
+                      <div style={{ position: "relative" }}>
+                        {loading === true && <VideoLoader />}
+                        <video
+                          className="w-100"
+                          controls
+                          autoPlay="off"
+                          onWaiting={() => setLoading(true)}
+                          onCanPlay={() => setLoading(false)}
+                          onPlaying={() => setLoading(false)}
+                        >
+                          <source src={videoUrl} type="video/mp4" />
+                        </video>
+                      </div>
                     </div>
-                  </div>
-                )
-              })}
+                  );
+                })}
             </div>
             <Pagination
               showPerPage={showPerPage}

@@ -25,18 +25,26 @@ const ForgetPassword = () => {
       email: payload.email,
       conPassword: payload.conPassword,
     };
-    axios.put(`${HOST_URL}/forgot/password`, forgot)
+    axios
+      .put(`${HOST_URL}/forgot/password`, forgot)
       .then((res) => res)
       .then((response) => {
         if (response.data.code === 1000) {
-          toast.success("Your Password Reset successfully", { theme: "colored", autoClose: 1000 });
+          toast.success("Your Password Reset successfully", {
+            theme: "colored",
+            autoClose: 1000,
+          });
           navigate("/login");
-        } if (response.data.code === 1001) {
+        } else if (response.data.code === 1001) {
           toast.error("User Not Found", { theme: "colored", autoClose: 1000 });
         }
         setLoading(false);
-      }).catch((error) => {
-        toast.error("Internal Server Error", { theme: "colored", autoClose: 3000 });
+      })
+      .catch((error) => {
+        toast.error("Internal Server Error", {
+          theme: "colored",
+          autoClose: 3000,
+        });
         setLoading(false);
       });
   };

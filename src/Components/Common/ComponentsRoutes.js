@@ -15,26 +15,26 @@ import AddUser from "../User/AddUser";
 import UpdateUser from "../User/UpdateUser";
 
 export const ComponentsRoutes = () => {
-    return (
-        <React.Fragment>
-            <Routes>
-                <Route>
-                    <Route index element={<Home />} />
-                    <Route path="/home" element={<Home />} />
-                    <Route path="*" element={<NoPage />} />
-                    <Route path="/register" element={<Register />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/forget/password" element={<ForgetPassword />} />
-                    <Route path="/translator" element={<Translate />} />
-                    <Route element={<PrivateComponent />}>
-                        <Route path="/user" element={<UserDetail />} />
-                        <Route path="/profile" element={<Profile />} />
-                        <Route path="/about" element={<About />} />
-                        <Route path="/product" element={<Products />} />
-                        <Route path="/add-user" element={<AddUser />} />
-                        <Route path="/update/user/:id" element={<UpdateUser />} />
-                    </Route>
-                </Route>
-            </Routes>
-        </React.Fragment>)
-}
+  return (
+    <React.Fragment>
+      <Routes>
+        <Route>
+          <Route path="/" element={<Home />} />
+          <Route path="*" element={<NoPage />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/forget/password" element={<ForgetPassword />} />
+          <Route element={<PrivateComponent />}>
+            <Route path="/translator" element={<Translate />} />
+            <Route path="/user" element={<UserDetail />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/product" element={<Products />} />
+            <Route path="/add-user" element={<AddUser />} />
+            <Route path="/update/user/:id" element={<UpdateUser />} />
+          </Route>
+        </Route>
+      </Routes>
+    </React.Fragment>
+  );
+};

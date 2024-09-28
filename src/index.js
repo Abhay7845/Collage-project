@@ -7,7 +7,7 @@ import "react-toastify/dist/ReactToastify.css";
 import "tippy.js/dist/tippy.css";
 import "leaflet/dist/leaflet.css";
 import "react-super-responsive-table/dist/SuperResponsiveTableStyle.css";
-import { GoogleOAuthProvider } from '@react-oauth/google';
+import { GoogleOAuthProvider } from "@react-oauth/google";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
@@ -32,13 +32,15 @@ document.onkeydown = function (e) {
     return false;
   }
 };
-const clientId = "632374650147-6u3udp32jqakfdnf7usl8vsip7gjnmrh.apps.googleusercontent.com";
+const clientId =
+  "632374650147-6u3udp32jqakfdnf7usl8vsip7gjnmrh.apps.googleusercontent.com";
 
 root.render(
   <React.StrictMode>
     <GoogleOAuthProvider clientId={clientId}>
       <App />
-    </GoogleOAuthProvider>;
+    </GoogleOAuthProvider>
+    ;
   </React.StrictMode>
 );
 reportWebVitals();

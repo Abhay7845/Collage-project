@@ -7,51 +7,53 @@ import { HOST_URL } from "../../API/Host";
 import AppLoader from "../Common/AppLoader";
 import { toast } from "react-toastify";
 import { Table, Thead, Tbody, Tr, Th, Td } from "react-super-responsive-table";
-import Cookies from "js-cookie"
+import { APIUrl } from "../../API/EndPoint";
+import { APIGetAddedUser } from "../../API/CommonApiCall";
 
 const UserDetail = () => {
   const [addUserInfo, setAddUserInfo] = useState([]);
-  const [loading, setLoading] = useState("");
-  const userAccessToken = Cookies.get("token");
-
-  const GetUserDetails = (userAccessToken) => {
+  const [loading, setLoading] = useState(false);
+  const GetUserDetails = () => {
     setLoading(true);
-    axios.get(`${HOST_URL}/fetchAddUser`, {
-      headers: {
-        "Content-Type": "application/json",
-        Authorization: userAccessToken,
-      },
-    }).then((res) => res).then((response) => {
-      if (response.data.code === 1000) {
-        setAddUserInfo(response.data.addUserData);
-      } else if (response.data.code === 1001) {
-        setAddUserInfo([]);
-      }
-      setLoading(false);
-    }).catch((error) => {
-      toast.error("Internal Server Error", { theme: "colored", autoClose: 3000 });
-      setLoading(false);
-    });
+    APIGetAddedUser(APIUrl.ADDED_USER)
+      .then((res) => res)
+      .then((response) => {
+        if (response.data.code === 1000) {
+          setAddUserInfo(response.data.addUserData);
+        }
+        setLoading(false);
+      })
+      .catch((error) => {
+        setLoading(false);
+      });
   };
 
   useEffect(() => {
-    GetUserDetails(userAccessToken);
-  }, [userAccessToken]);
+    GetUserDetails();
+  }, []);
 
   const DeleteUser = (id) => {
     setLoading(true);
-    axios.delete(`${HOST_URL}/delete/user/${id}`)
+    axios
+      .delete(`${HOST_URL}/delete/user/${id}`)
       .then((res) => res)
       .then((result) => {
         if (result.data.code === 1000) {
-          GetUserDetails(userAccessToken);
-          toast.success("Data has been Deleted", { theme: "colored", autoClose: 1000 });
-        } if (result.data.code === 1001) {
-          GetUserDetails(userAccessToken);
+          GetUserDetails();
+          toast.success("Data has been Deleted", {
+            theme: "colored",
+            autoClose: 1000,
+          });
+        } else if (result.data.code === 1001) {
+          GetUserDetails();
         }
         setLoading(false);
-      }).catch((error) => {
-        toast.error("Internal Server Error", { theme: "colored", autoClose: 3000 });
+      })
+      .catch((error) => {
+        toast.error("Internal Server Error", {
+          theme: "colored",
+          autoClose: 3000,
+        });
         setLoading(false);
       });
   };

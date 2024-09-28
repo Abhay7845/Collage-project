@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Field, Form, Formik } from "formik";
 import moment from "moment";
-import { contactInitialValue, contactSchema } from "../ValidationSchema/ForgotSchema";
+import {
+  contactInitialValue,
+  contactSchema,
+} from "../ValidationSchema/ForgotSchema";
 import * as Icon from "react-bootstrap-icons";
 import ShowError from "../Common/ShowError";
 import Footer from "../HomePage/Footer";
@@ -17,32 +20,43 @@ const About = () => {
 
   const onSendComment = async (payload) => {
     setLoading(true);
-    axios.post(`${HOST_URL}/comment`, payload)
+    axios
+      .post(`${HOST_URL}/comment`, payload)
       .then((res) => res)
       .then((result) => {
         if (result.data.code === 1000) {
-          toast.success("Thank You For Support", { theme: "colored", autoClose: 2000 });
+          toast.success("Thank You For Support", {
+            theme: "colored",
+            autoClose: 2000,
+          });
         }
         setLoading(false);
-      }).catch((erro) => setLoading(false));
+      })
+      .catch((erro) => setLoading(false));
   };
 
   //FETCH USERS COMMENTS
   useEffect(() => {
-    axios.get(`${HOST_URL}/fetch/comment`, {})
+    axios
+      .get(`${HOST_URL}/fetch/comment`, {})
       .then((res) => res)
       .then((result) => setComments(result.data.comments))
       .catch((error) => setLoading(false));
   }, [comments]);
 
   const DeleteUserComment = (id) => {
-    axios.delete(`${HOST_URL}/delete/comment/${id}`)
+    axios
+      .delete(`${HOST_URL}/delete/comment/${id}`)
       .then((res) => res)
       .then((response) => {
         if (response.data.code === 1000) {
-          toast.success("Delete Successfully", { theme: "colored", autoClose: 2000 });
+          toast.success("Delete Successfully", {
+            theme: "colored",
+            autoClose: 2000,
+          });
         }
-      }).catch((error) => setLoading(false));
+      })
+      .catch((error) => setLoading(false));
   };
 
   return (

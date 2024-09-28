@@ -12,14 +12,16 @@ const Translate = () => {
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    axios.get("https://libretranslate.com/languages", {
-      headers: {
-        accept: "application/json",
-      },
-    }).then(async (res) => {
-      let result = await res.data;
-      setOption(result);
-    });
+    axios
+      .get("https://libretranslate.com/languages", {
+        headers: {
+          accept: "application/json",
+        },
+      })
+      .then(async (res) => {
+        let result = await res.data;
+        setOption(result);
+      });
   }, [option]);
 
   const translateLanguage = async () => {
@@ -30,21 +32,30 @@ const Translate = () => {
     params.append("api_key", "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx");
     if (input) {
       setLoading(true);
-      axios.post("https://libretranslate.de/translate", params, {
-        headers: {
-          accept: "application/json, text/plain, */*",
-          "Content-Type": "application/x-www-form-urlencoded",
-        },
-      }).then((res) => res)
+      axios
+        .post("https://libretranslate.de/translate", params, {
+          headers: {
+            accept: "application/json, text/plain, */*",
+            "Content-Type": "application/x-www-form-urlencoded",
+          },
+        })
+        .then((res) => res)
         .then((response) => {
           setOutput(response.data.translatedText);
           setLoading(false);
-        }).catch((error) => {
-          toast.warn("Server is not running", { theme: "colored", autoClose: 2000 });
+        })
+        .catch((error) => {
+          toast.warn("Server is not running", {
+            theme: "colored",
+            autoClose: 2000,
+          });
           setLoading(false);
         });
     } else {
-      toast.error("Please enter your text", { theme: "colored", autoClose: 2000 });
+      toast.error("Please enter your text", {
+        theme: "colored",
+        autoClose: 2000,
+      });
     }
   };
 
